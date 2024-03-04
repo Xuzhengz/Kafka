@@ -24,6 +24,8 @@ public class CustomConsumer3 {
 //        key、value反序列化
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class.getName());
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,"false");
+
 //        创建消费组Id必须手动设置
         properties.put(ConsumerConfig.GROUP_ID_CONFIG,"ocean3");
         //        修改分区分配策略
@@ -35,15 +37,18 @@ public class CustomConsumer3 {
         topics.add("first");
         kafkaConsumer.subscribe(topics);
 //        拉取数据打印
-        while (true){
+        boolean flag =true;
+        while (flag){
             ConsumerRecords<String, String> consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(1));
 //            打印消费到的数据
             for (ConsumerRecord<String, String> consumerRecord : consumerRecords) {
                 System.out.println(consumerRecord);
+                if ("end".equals(consumerRecord.value())){
+                    flag  = false;
+                }
             }
-
-
         }
+        kafkaConsumer.close();
         
     }
 
