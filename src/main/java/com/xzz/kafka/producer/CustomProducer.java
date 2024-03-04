@@ -16,7 +16,7 @@ public class CustomProducer {
         //        创建生产者配置信息
         Properties properties = new Properties();
 //                创建生产者连接的broker
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "hadoop102:9092");
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.211.55.22:9092");
 //        创建key，value全类名
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -27,7 +27,7 @@ public class CustomProducer {
 //        创建send方法发送信息
         try {
             for (int i = 0; i < 7; i++) {
-                kafkaProducer.send(new ProducerRecord<String, String>("first", "ocean" + i));
+                kafkaProducer.send(new ProducerRecord<String, String>("radar", "6742","ocean" + i));
             }
         } catch (Exception e) {
             e.printStackTrace();
